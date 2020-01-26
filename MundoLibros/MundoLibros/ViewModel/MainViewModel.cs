@@ -8,6 +8,9 @@ namespace MundoLibros.ViewModel
     {
         private static MainViewModel instance;
 
+        public CategoriaViewModel CatVM { get; set; }
+        public LibrosViewModel LibroVM { get; set; }
+
         public MainViewModel()
         {
             instance = this;

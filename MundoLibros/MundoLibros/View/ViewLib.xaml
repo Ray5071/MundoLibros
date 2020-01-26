@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             x:Class="MundoLibros.View.ViewLib">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout BindingContext="{Binding LibroVM}" Padding="15, 15, 0, 0">
+                <!--Padding="15" Spacing="20"-->
+
+                <Label Text="Libreria" Font="24" HorizontalOptions="Center"
+                   VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" />
+                <Label Text="Primera prueba XamarinForm Raymer" Font="16" HorizontalOptions="Center"
+                   VerticalOptions="Center" FontAttributes="Italic" TextColor="Black" />
+
+                <Entry x:Name="Id" Text="{Binding IdLibro}" IsVisible="False"></Entry>
+                <Entry x:Name="NombreLibro" Text="{Binding NombreLibro}" Placeholder="Titulo" FontSize="14" PlaceholderColor="DimGray"></Entry>
+
+                <!--<Label x:Name="fechaLibro" Text="Fecha Publicacion Libro" FontSize="14" VerticalOptions="Center" TextColor="DimGray"/>
+                <DatePicker Date="{x:Static system:DateTime.Today}" TextColor="DimGray"></DatePicker>-->
+                <Grid>
+                    <Button Text="Insertar" Command="{Binding Agregar}" Clicked="Empty_Clicked" 
+                            HorizontalOptions="Start" BackgroundColor="DarkGreen" TextColor="White" />
+                    <Button Text="Editar" Command="{Binding Actualizar}" Clicked="Empty_Clicked" 
+                            HorizontalOptions="Center" BackgroundColor="DarkGreen" TextColor="White" />
+                    <Button Text="Eliminar" Command="{Binding Eliminar}" Clicked="Empty_Clicked" 
+                            HorizontalOptions="End" BackgroundColor="DarkGreen" TextColor="White" />
+                </Grid>
+
+                <!--<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"></ActivityIndicator>-->
+
+                <ScrollView>
+                    <ListView x:Name="listView" 
+                          HasUnevenRows="True" 
+                          ItemsSource="{Binding Libros}" 
+                          ItemTapped="ListView_ItemTapped">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout>
+                                        <Label Text="{Binding IdLibro}" FontSize="Small" TextColor="Red"/>
+                                        <Label Text="{Binding NombreLibro}" FontSize="Small" TextColor="Black"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+                
+                
+                
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

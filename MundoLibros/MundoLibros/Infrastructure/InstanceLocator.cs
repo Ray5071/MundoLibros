@@ -5,11 +5,11 @@ using System.Text;
 
 namespace MundoLibros.Infrastructure
 {
-    public class InstanteLocator
+    public class InstanceLocator
     {
         public MainViewModel Main { get; set; }
 
-        public InstanteLocator()
+        public InstanceLocator()
         {
             this.Main = new MainViewModel();
         }

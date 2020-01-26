@@ -1,4 +1,8 @@
-﻿using System;
+﻿using MundoLibros.Service;
+using MundoLibros.View;
+using MundoLibros.ViewModel;
+using System;
+using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +15,12 @@ namespace MundoLibros
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            var Main = MainViewModel.GetInstance();
+
+            Main.LibroVM = new LibrosViewModel();
+            Main.CatVM = new CategoriaViewModel();
+
+            MainPage = new NavigationPage(new ViewCate());
         }
 
         protected override void OnStart()

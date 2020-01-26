@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             x:Class="MundoLibros.View.ViewCate"
+             Title="Mundo Libros, SRL">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Libros" Clicked="Add_Clicked"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout BindingContext="{Binding CatVM}" Padding="15">
+                <Label Text="Mundo Libros" Font="30" HorizontalOptions="Center" VerticalOptions="Center" 
+                       FontAttributes="Italic" TextColor="Black"/>
+                <Label Text="Categorias" Font="15" HorizontalOptions="Center" VerticalOptions="Center"
+                       FontAttributes="Bold" TextColor="Gray"/>
+
+                <Entry x:Name="Codigo" Text="{Binding IdCat}" IsVisible="True"></Entry>
+                <Entry x:Name="Descripcion" Text="{Binding DescriptionCat}" Placeholder="Descripcion" FontSize="14" PlaceholderColor="DimGray"></Entry>
+
+                <Button Text="Insertar" Command="{Binding Agregar}"
+                            HorizontalOptions="Start" BackgroundColor="DarkGreen" TextColor="White" />
+                <Button Text="Actualizar" Command="{Binding Actualizar}"
+                        HorizontalOptions="Center" BackgroundColor="DarkGreen" TextColor="White"/>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
