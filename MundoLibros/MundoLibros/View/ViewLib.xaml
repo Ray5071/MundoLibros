@@ -5,19 +5,31 @@
              x:Class="MundoLibros.View.ViewLib">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout BindingContext="{Binding LibroVM}" Padding="15, 15, 0, 0">
-                <!--Padding="15" Spacing="20"-->
+            <StackLayout BindingContext="{Binding LibroVM}" Margin="15">
 
-                <Label Text="Libreria" Font="24" HorizontalOptions="Center"
+                <Label Text="Nuevos Libros" Font="24" HorizontalOptions="Center"
                    VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" />
-                <Label Text="Primera prueba XamarinForm Raymer" Font="16" HorizontalOptions="Center"
+                <Label Text="Inserte los Libros en su Categoria Correspondiente" Font="16" HorizontalOptions="Center"
                    VerticalOptions="Center" FontAttributes="Italic" TextColor="Black" />
 
                 <Entry x:Name="Id" Text="{Binding IdLibro}" IsVisible="False"></Entry>
-                <Entry x:Name="NombreLibro" Text="{Binding NombreLibro}" Placeholder="Titulo" FontSize="14" PlaceholderColor="DimGray"></Entry>
+                <Entry x:Name="NombreLibro" Text="{Binding NombreLibro}" 
+                       Placeholder="Nombre del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
+                <Entry x:Name="AutorLibro" Text="{Binding AutorLibro}" 
+                       Placeholder="Autor del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
+                <Entry x:Name="FechaPublicacionLibro" Text="{Binding FechaPublicacionLibro}" 
+                       Placeholder="Fecha de Publicacion" FontSize="14" PlaceholderColor="DimGray"></Entry>
+                <Entry x:Name="Precio" Text="{Binding PrecioLibro}" 
+                       Placeholder="Precio del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
+                <Entry x:Name="Disponibildad" Text="{Binding Disponibilidad}" 
+                       Placeholder="Hay mas Libros?" FontSize="14" PlaceholderColor="DimGray"></Entry>
+                <Entry x:Name="CodigoCat" Text="{Binding IdCat}" 
+                       Placeholder="Codigo de Categoria" FontSize="14" PlaceholderColor="DimGray"></Entry>
+                
+                <StackLayout BindingContext="{Binding CatVM}">
+                    <Picker Title="Categorias" ItemsSource="{Binding Types}"/>
+                </StackLayout>
 
-                <!--<Label x:Name="fechaLibro" Text="Fecha Publicacion Libro" FontSize="14" VerticalOptions="Center" TextColor="DimGray"/>
-                <DatePicker Date="{x:Static system:DateTime.Today}" TextColor="DimGray"></DatePicker>-->
                 <Grid>
                     <Button Text="Insertar" Command="{Binding Agregar}" Clicked="Empty_Clicked" 
                             HorizontalOptions="Start" BackgroundColor="DarkGreen" TextColor="White" />
@@ -27,7 +39,6 @@
                             HorizontalOptions="End" BackgroundColor="DarkGreen" TextColor="White" />
                 </Grid>
 
-                <!--<ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"></ActivityIndicator>-->
 
                 <ScrollView>
                     <ListView x:Name="listView" 

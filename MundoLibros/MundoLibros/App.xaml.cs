@@ -11,6 +11,7 @@ namespace MundoLibros
 {
     public partial class App : Application
     {
+        public static MasterDetailPage MasterD { get; set; }
         public App()
         {
             InitializeComponent();
@@ -19,8 +20,9 @@ namespace MundoLibros
 
             Main.LibroVM = new LibrosViewModel();
             Main.CatVM = new CategoriaViewModel();
+            Main.LisVM = new ListViewModel();
 
-            MainPage = new NavigationPage(new ViewCate());
+            MainPage = new NavigationPage(new PagePrincipal());
         }
 
         protected override void OnStart()

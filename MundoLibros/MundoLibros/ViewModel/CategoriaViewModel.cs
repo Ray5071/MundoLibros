@@ -1,5 +1,4 @@
-﻿using Android.Icu.Text;
-using MundoLibros.Models;
+﻿using MundoLibros.Models;
 using MundoLibros.Service;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -32,13 +31,6 @@ namespace MundoLibros.ViewModel
             get { return _descriptionCat; }
             set { _descriptionCat = value; }
         }
-        private async void LlenarCategorias()
-        {
-            var lista = await _Data.ConsultarCategoria();
-            this._categoria = new ObservableCollection<Categoria>(lista);
-
-            DescriptionCat = "";
-        }
         public ObservableCollection<Categoria> List()
         {
             Types.Add(new Categoria
@@ -48,30 +40,65 @@ namespace MundoLibros.ViewModel
             });
             return Types;
         }
+        private async void LlenarCategorias()
+        {
+            var lista = await _Data.ConsultarCategoria();
+            this.Types = new ObservableCollection<Categoria>(lista);
+
+            DescriptionCat = "";
+        }
         public ICommand Agregar => new Command(InsertCategoria);
         private async void InsertCategoria()
         {
-            Type = new Categoria()
+            if (Types.Count == 0)
             {
-                IdCat = IdCat,
-                DescriptionCat = DescriptionCat
-            };
+                Type = new Categoria()
+                {
+                    IdCat = IdCat + 1,
+                    DescriptionCat = DescriptionCat
+                };
+            }
+            else
+            {
+                Type = new Categoria()
+                {
+                    DescriptionCat = DescriptionCat
+                };
+            }
             using (var dat = DataBase.getInstance())
             {
                 await dat.InsertCat(Type);
+                LlenarCategorias();
                 IsBusy = true;
             }
         }
         public ICommand Actualizar => new Command(ActualizarCategoria);
         private async void ActualizarCategoria()
         {
+            Categoria CatToUpdate = Types.FirstOrDefault(l => l.IdCat == IdCat);
+            CatToUpdate.DescriptionCat = DescriptionCat;
+
             using (var dat = DataBase.getInstance())
             {
-                Categoria CatToUpdate = Types.FirstOrDefault(l => l.IdCat == IdCat);
-
-                CatToUpdate.DescriptionCat = DescriptionCat;
-
                 await dat.UpdateCategoria(CatToUpdate);
+                LlenarCategorias();
+                IsBusy = true;
+            }
+        }
+        public ICommand Eliminar => new Command(EliminarLibro);
+        private async void EliminarLibro()
+        {
+            Categoria CatToDelete = Types.FirstOrDefault(l => l.IdCat == IdCat);
+            using (var dat = DataBase.getInstance())
+            {
+                for (int i = 0; i < Types.Count; i++)
+                {
+                    if (Types[i].IdCat == CatToDelete.IdCat)
+                    {
+                        Types[i] = CatToDelete;
+                        await dat.DeleteCategoria(CatToDelete);
+                    }
+                }
                 LlenarCategorias();
                 IsBusy = true;
             }

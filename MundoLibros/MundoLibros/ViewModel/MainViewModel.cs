@@ -10,6 +10,7 @@ namespace MundoLibros.ViewModel
 
         public CategoriaViewModel CatVM { get; set; }
         public LibrosViewModel LibroVM { get; set; }
+        public ListViewModel LisVM { get; set; }
 
         public MainViewModel()
         {

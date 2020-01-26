@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MundoLibros.View.master"
+             Title="Master">
+
+    <StackLayout Orientation="Vertical">
+        
+        <Label Text="Menu Inicio" Font="35" TextColor="Black" FontAttributes="Bold"/>
+
+        <Button Text="Agregar Categoria" x:Name="btnAddCate" Clicked="BtnAddCate_Clicked"></Button>
+        <Button Text="Agregar Libro" x:Name="btnAddLib" Clicked="BtnAddLib_Clicked"></Button>
+
+    </StackLayout>
+    
+</ContentPage>
