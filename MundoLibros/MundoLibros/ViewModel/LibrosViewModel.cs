@@ -63,6 +63,8 @@ namespace MundoLibros.ViewModel
         }
         #endregion Propiedades
 
+        public string Categor { get; set; }
+
         public LibrosViewModel()
         {
             _Data = new DataBase();

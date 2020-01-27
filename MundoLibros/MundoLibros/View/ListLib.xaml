@@ -10,7 +10,8 @@
             <ScrollView>
                 <ListView x:Name="listView" 
                           HasUnevenRows="True" 
-                          ItemsSource="{Binding Libros}">
+                          ItemsSource="{Binding Libros}"
+                          ItemTapped="ListView_ItemTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

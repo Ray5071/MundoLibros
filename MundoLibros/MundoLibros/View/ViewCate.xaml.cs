@@ -20,7 +20,7 @@ namespace MundoLibros.View
 		}
         async void Add_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ViewLib());
+            await Navigation.PushAsync(new ViewLib(""));
         }
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {

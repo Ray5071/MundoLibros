@@ -26,7 +26,7 @@ namespace MundoLibros.View
         private async void BtnAddLib_Clicked(object sender, EventArgs e)
         {
             App.MasterD.IsPresented = false;
-            await App.MasterD.Detail.Navigation.PushAsync(new ViewLib());
+            await App.MasterD.Detail.Navigation.PushAsync(new ViewLib(""));
         }
 
         private async void BtnListLib_Clicked(object sender, EventArgs e)

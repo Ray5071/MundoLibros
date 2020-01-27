@@ -5,6 +5,7 @@
              x:Class="MundoLibros.View.ViewLib">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Limpiar" Clicked="Empty_Clicked"/>
+        <ToolbarItem x:Name="List" Text="Lista" Clicked="List_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>

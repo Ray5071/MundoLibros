@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             x:Class="MundoLibros.View.ListCate">
+    <ContentPage.Content>
+        <StackLayout BindingContext="{Binding CatVM}" Padding="15">
+            <Label Text="Lista de Categorias" Font="24" HorizontalOptions="Center" VerticalOptions="Center"
+                   FontAttributes="Bold" TextColor="Black"/>
+            
+            <ScrollView>
+                <ListView x:Name="listView" 
+                          HasUnevenRows="True" 
+                          ItemsSource="{Binding Types}">
+                    <!--ItemTapped="ListView_ItemTapped"-->
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="{Binding IdCat}" FontSize="Small" TextColor="Red"/>
+                                    <Label Text="{Binding DescriptionCat}" FontSize="Small" TextColor="Black"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

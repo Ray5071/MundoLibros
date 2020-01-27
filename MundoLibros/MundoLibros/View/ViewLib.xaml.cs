@@ -10,9 +10,11 @@ namespace MundoLibros.View
 	{
         //private SQLiteAsyncConnection db;
         //private Categoria ca;
-        public ViewLib ()
+        public string Categor { get; set; }
+        public ViewLib (string a)
 		{
 			InitializeComponent ();
+            NombreLibro.Text = a;
         }
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
@@ -41,6 +43,12 @@ namespace MundoLibros.View
         {
             Categoria CateActual = (Categoria)e.Item;
             CodigoCat.Text = Convert.ToString(CateActual.IdCat);
+        }
+
+        private async void List_Clicked(object sender, EventArgs e)
+        {
+            //await Navigation.PopAsync();
+            //await Navigation.PushAsync(new ListLib());
         }
     }
 }

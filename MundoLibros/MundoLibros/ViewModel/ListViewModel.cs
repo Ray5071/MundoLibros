@@ -13,6 +13,7 @@ namespace MundoLibros.ViewModel
         private ObservableCollection<Libro> _libros;
         public ObservableCollection<Libro> Libros { get => _libros; set => this.SetValue(ref _libros, value); }
 
+                
         #region Propiedades
         private int _idLibro;
         public int IdLibro
@@ -44,7 +45,8 @@ namespace MundoLibros.ViewModel
             get { return _precio; }
             set { _precio = value; }
         }
-        private string _disponibilidad;
+        private string
+ _disponibilidad;
         public string Disponibilidad
         {
             get { return _disponibilidad; }
@@ -57,6 +59,8 @@ namespace MundoLibros.ViewModel
             set { _idCat = value; }
         }
         #endregion Propiedades
+
+
 
         public ListViewModel()
         {

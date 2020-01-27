@@ -1,4 +1,5 @@
 ﻿using MundoLibros.Models;
+using MundoLibros.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,22 +18,24 @@ namespace MundoLibros.View
 		{
 			InitializeComponent ();
 		}
-        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             //ViewLib l = new ViewLib();
 
-            //Libro libroActual = (Libro)e.Item;
+            Libro libroActual = (Libro)e.Item;
             //Id.Text = Convert.ToString(libroActual.IdLibro);
-            //ViewLib.NombreLibro.Text = libroActual.NombreLibro;
+            //NombreLibro.Text = libroActual.NombreLibro;
             //AutorLibro.Text = libroActual.AutorLibro;
             //FechaPublicacionLibro.Text = libroActual.FechaPublicacionLibro;
             //Precio.Text = Convert.ToString(libroActual.Precio);
             //Disponibildad.Text = Convert.ToString(libroActual.DisponibilidadLibro);
             //CodigoCat.Text = Convert.ToString(libroActual.IdCat);
+            //await Navigation.PushAsync(new ViewLib(libroActual.NombreLibro));
         }
         private async void BtnEditar_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ViewLib());
+            //await Navigation.PushAsync(new ViewLib());
         }
+        
     }
 }
