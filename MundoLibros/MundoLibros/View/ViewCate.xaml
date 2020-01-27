@@ -34,6 +34,10 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
+                                    <ViewCell.ContextActions>
+                                        <MenuItem x:Name="btnEditar" Text="Lista de Libros" IsDestructive="True"
+                                          Command="{Binding }" Clicked="BtnEditar_Clicked"/>
+                                    </ViewCell.ContextActions>
                                     <StackLayout>
                                         <Label Text="{Binding IdCat}" FontSize="Small" TextColor="Red"/>
                                         <Label Text="{Binding DescriptionCat}" FontSize="Small" TextColor="Black"/>

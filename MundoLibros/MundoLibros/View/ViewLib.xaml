@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              x:Class="MundoLibros.View.ViewLib">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Limpiar" Clicked="Empty_Clicked"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BindingContext="{Binding LibroVM}" Margin="15">
@@ -19,15 +22,16 @@
                        Placeholder="Autor del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
                 <Entry x:Name="FechaPublicacionLibro" Text="{Binding FechaPublicacionLibro}" 
                        Placeholder="Fecha de Publicacion" FontSize="14" PlaceholderColor="DimGray"></Entry>
-                <Entry x:Name="Precio" Text="{Binding PrecioLibro}" 
+                <Entry x:Name="PrecioLib" Text="{Binding PrecioLibro}" 
                        Placeholder="Precio del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
-                <Entry x:Name="Disponibildad" Text="{Binding Disponibilidad}" 
+                <Entry x:Name="Dispo" Text="{Binding DisponibilidadLibro}" 
                        Placeholder="Hay mas Libros?" FontSize="14" PlaceholderColor="DimGray"></Entry>
                 <Entry x:Name="CodigoCat" Text="{Binding IdCat}" 
                        Placeholder="Codigo de Categoria" FontSize="14" PlaceholderColor="DimGray"></Entry>
-                
-                <StackLayout BindingContext="{Binding CatVM}">
-                    <Picker Title="Categorias" ItemsSource="{Binding Types}"/>
+
+                <StackLayout Margin="20">
+                    <Label Text="Categorias" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Picker x:Name="myPicker" Title="Seleccione Categoria" ItemsSource="{Binding Categorias}" SelectedItem="{Binding SelectedColorName, Mode=TwoWay}" />
                 </StackLayout>
 
                 <Grid>
@@ -51,6 +55,11 @@
                                     <StackLayout>
                                         <Label Text="{Binding IdLibro}" FontSize="Small" TextColor="Red"/>
                                         <Label Text="{Binding NombreLibro}" FontSize="Small" TextColor="Black"/>
+                                        <Label Text="{Binding AutorLibro}" FontSize="Small" TextColor="Black"/>
+                                        <Label Text="{Binding FechaPublicacionLibro}" FontSize="Small" TextColor="Black"/>
+                                        <Label Text="{Binding PrecioLibro}" FontSize="Small" TextColor="Black"/>
+                                        <Label Text="{Binding DisponibilidadLibro}" FontSize="Small" TextColor="Black"/>
+                                        <Label Text="{Binding IdCat}" FontSize="Small" TextColor="Black"/>
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>

@@ -10,6 +10,8 @@
 
         <Button Text="Agregar Categoria" x:Name="btnAddCate" Clicked="BtnAddCate_Clicked"></Button>
         <Button Text="Agregar Libro" x:Name="btnAddLib" Clicked="BtnAddLib_Clicked"></Button>
+        <Button Text="Lista de Libros" x:Name="btnListLib" Clicked="BtnListLib_Clicked"></Button>
+        
 
     </StackLayout>
     

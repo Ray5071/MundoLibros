@@ -21,7 +21,7 @@ namespace MundoLibros.Droid.Conexion
 {
     public class Config : IConfig
     {
-        private SQLiteAsyncConnection db;
+        //private SQLiteAsyncConnection db;
 
         private string GetPath()
         {

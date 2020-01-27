@@ -10,7 +10,6 @@ namespace MundoLibros.ViewModel
     public class ListViewModel : BaseViewModel
     {
         private DataBase _Data;
-        private Libro lib;
         private ObservableCollection<Libro> _libros;
         public ObservableCollection<Libro> Libros { get => _libros; set => this.SetValue(ref _libros, value); }
 
@@ -39,14 +38,14 @@ namespace MundoLibros.ViewModel
             get { return _fechaPublicacion; }
             set { _fechaPublicacion = value; }
         }
-        private decimal _precio;
-        public decimal PrecioLibro
+        private string _precio;
+        public string PrecioLibro
         {
             get { return _precio; }
             set { _precio = value; }
         }
-        private bool _disponibilidad;
-        public bool Disponibilidad
+        private string _disponibilidad;
+        public string Disponibilidad
         {
             get { return _disponibilidad; }
             set { _disponibilidad = value; }
@@ -79,7 +78,7 @@ namespace MundoLibros.ViewModel
                 NombreLibro = NombreLibro,
                 AutorLibro = AutorLibro,
                 FechaPublicacionLibro = FechaPublicacionLibro,
-                Precio = PrecioLibro,
+                PrecioLibro = PrecioLibro,
                 DisponibilidadLibro = Disponibilidad,
                 IdCat = IdCat
 

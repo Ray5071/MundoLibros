@@ -1,12 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
              x:Class="MundoLibros.View.ListLib">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout BindingContext="{Binding LibroVM}" Margin="15">
+            <Label Text="Lista de Libros" Font="24" HorizontalOptions="Center" VerticalOptions="Center"
+                   FontAttributes="Bold" TextColor="Black"/>
+            <ScrollView>
+                <ListView x:Name="listView" 
+                          HasUnevenRows="True" 
+                          ItemsSource="{Binding Libros}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem x:Name="btnEditar" Text="Editar Libro" IsDestructive="True"
+                                          Command="{Binding }" Clicked="BtnEditar_Clicked"/>
+                                </ViewCell.ContextActions>
+                                <StackLayout>
+                                    <Label Text="{Binding IdLibro}" FontSize="Small" TextColor="Red"/>
+                                    <Label Text="{Binding NombreLibro}" FontSize="Small" TextColor="Black"/>
+                                    <Label Text="{Binding AutorLibro}" FontSize="Small" TextColor="Black"/>
+                                    <Label Text="{Binding FechaPublicacionLibro}" FontSize="Small" TextColor="Black"/>
+                                    <Label Text="{Binding PrecioLibro}" FontSize="Small" TextColor="Black"/>
+                                    <Label Text="{Binding DisponibilidadLibro}" FontSize="Small" TextColor="Black"/>
+                                    <Label Text="{Binding IdCat}" FontSize="Small" TextColor="Black"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

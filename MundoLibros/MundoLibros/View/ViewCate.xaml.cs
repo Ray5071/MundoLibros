@@ -1,6 +1,7 @@
 ﻿using MundoLibros.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,13 +24,17 @@ namespace MundoLibros.View
         }
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            Categoria libroActual = (Categoria)e.Item;
-            Codigo.Text = Convert.ToString(libroActual.IdCat);
-            Descripcion.Text = libroActual.DescriptionCat;
+            Categoria CateActual = (Categoria)e.Item;
+            Codigo.Text = Convert.ToString(CateActual.IdCat);
+            Descripcion.Text = CateActual.DescriptionCat;
         }
         private void Empty_Clicked(object sender, EventArgs e)
         {
             Descripcion.Text = "";
+        }
+        private async void BtnEditar_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ListLib());
         }
     }
 }
