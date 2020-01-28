@@ -81,6 +81,7 @@ namespace MundoLibros.ViewModel
             var lista = await _Data.ConsultarCategoria();
             this.Types = new ObservableCollection<Categoria>(lista);
         }
+        
         //public IList<string> Categorias
         //{
         //    get
