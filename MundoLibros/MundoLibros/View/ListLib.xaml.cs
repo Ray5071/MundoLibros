@@ -18,7 +18,7 @@ namespace MundoLibros.View
 		{
 			InitializeComponent ();
 		}
-        private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             //ViewLib l = new ViewLib();
 
@@ -32,7 +32,7 @@ namespace MundoLibros.View
             //CodigoCat.Text = Convert.ToString(libroActual.IdCat);
             //await Navigation.PushAsync(new ViewLib(libroActual.NombreLibro));
         }
-        private async void BtnEditar_Clicked(object sender, EventArgs e)
+        private void BtnEditar_Clicked(object sender, EventArgs e)
         {
             //await Navigation.PushAsync(new ViewLib());
         }

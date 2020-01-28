@@ -22,7 +22,7 @@ namespace MundoLibros
             Main.CatVM = new CategoriaViewModel();
             Main.LisVM = new ListViewModel();
 
-            MainPage = new NavigationPage(new PagePrincipal());
+            MainPage = new PagePrincipal(); //new NavigationPage();
         }
 
         protected override void OnStart()

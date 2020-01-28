@@ -14,8 +14,10 @@ namespace MundoLibros.ViewModel
     {
         private DataBase _Data;
         private Libro lib;
-        private SQLiteAsyncConnection db;
         private ObservableCollection<Libro> _libros;
+        private ObservableCollection<Categoria> _categoria;
+        private Categoria _SelectedCategoria;
+        public ObservableCollection<Categoria> Types { get => _categoria; set => this.SetValue(ref _categoria, value); }
         public ObservableCollection<Libro> Libros { get => _libros; set => this.SetValue(ref _libros, value); }
 
         #region Propiedades
@@ -61,26 +63,32 @@ namespace MundoLibros.ViewModel
             get { return _idCat; }
             set { _idCat = value; }
         }
+        public Categoria SelectedCategoria
+        {
+            get { return _SelectedCategoria; }
+            set { _SelectedCategoria = value; }
+        }
         #endregion Propiedades
-
-        public string Categor { get; set; }
 
         public LibrosViewModel()
         {
             _Data = new DataBase();
             LlenarLibros();
+            LlenarCategorias();
         }
-        public IList<string> Categorias
+        public async void LlenarCategorias()
         {
-            get
-            {
-                return new List<string> { "Historia", "Poesia", "Novela" };
-            }
+            var lista = await _Data.ConsultarCategoria();
+            this.Types = new ObservableCollection<Categoria>(lista);
         }
-        public async Task ConLibros()
-        {
-            var ass = await db.QueryAsync<Libro>("select * from Libro");
-        }
+        //public IList<string> Categorias
+        //{
+        //    get
+        //    {
+        //        return new List<string> { "Historia", "Poesia", "Novela" };
+        //    }
+        //}
+
         private async void LlenarLibros()
         {
             var lista = await _Data.ConsultarLibro();
@@ -94,11 +102,11 @@ namespace MundoLibros.ViewModel
             {
                 IdLibro = IdLibro,
                 NombreLibro = NombreLibro,
-                AutorLibro = AutorLibro, 
+                AutorLibro = AutorLibro,
                 FechaPublicacionLibro = FechaPublicacionLibro,
-                PrecioLibro = PrecioLibro, 
-                DisponibilidadLibro = DisponibilidadLibro, 
-                IdCat = IdCat
+                PrecioLibro = PrecioLibro,
+                DisponibilidadLibro = DisponibilidadLibro,
+                IdCat = SelectedCategoria.IdCat
 
             });
             return Libros;
@@ -116,7 +124,7 @@ namespace MundoLibros.ViewModel
                     FechaPublicacionLibro = FechaPublicacionLibro,
                     PrecioLibro = PrecioLibro,
                     DisponibilidadLibro = DisponibilidadLibro,
-                    IdCat = IdCat
+                    IdCat = SelectedCategoria.IdCat
                 };
             }
             else
@@ -128,7 +136,7 @@ namespace MundoLibros.ViewModel
                     FechaPublicacionLibro = FechaPublicacionLibro,
                     PrecioLibro = PrecioLibro,
                     DisponibilidadLibro = DisponibilidadLibro,
-                    IdCat = IdCat
+                    IdCat = SelectedCategoria.IdCat
                 };
             }
             using (var dat = DataBase.getInstance())
@@ -147,7 +155,7 @@ namespace MundoLibros.ViewModel
             libToUpdate.FechaPublicacionLibro = FechaPublicacionLibro;
             libToUpdate.PrecioLibro = PrecioLibro;
             libToUpdate.DisponibilidadLibro = DisponibilidadLibro;
-            libToUpdate.IdCat = IdCat;
+            libToUpdate.IdCat = SelectedCategoria.IdCat;
 
             using (var dat = DataBase.getInstance())
             {

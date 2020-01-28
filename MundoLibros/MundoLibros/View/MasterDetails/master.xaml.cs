@@ -26,6 +26,7 @@ namespace MundoLibros.View
         private async void BtnAddLib_Clicked(object sender, EventArgs e)
         {
             App.MasterD.IsPresented = false;
+            ViewModel.MainViewModel.GetInstance().LibroVM.LlenarCategorias();
             await App.MasterD.Detail.Navigation.PushAsync(new ViewLib(""));
         }
 

@@ -16,7 +16,7 @@
                 <Label Text="Inserte los Libros en su Categoria Correspondiente" Font="16" HorizontalOptions="Center"
                    VerticalOptions="Center" FontAttributes="Italic" TextColor="Black" />
 
-                <Entry x:Name="Id" Text="{Binding IdLibro}" IsVisible="False"></Entry>
+                <Entry x:Name="IdLib" Text="{Binding IdLibro}" IsVisible="False"></Entry>
                 <Entry x:Name="NombreLibro" Text="{Binding NombreLibro}" 
                        Placeholder="Nombre del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
                 <Entry x:Name="AutorLibro" Text="{Binding AutorLibro}" 
@@ -27,12 +27,12 @@
                        Placeholder="Precio del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
                 <Entry x:Name="Dispo" Text="{Binding DisponibilidadLibro}" 
                        Placeholder="Hay mas Libros?" FontSize="14" PlaceholderColor="DimGray"></Entry>
-                <Entry x:Name="CodigoCat" Text="{Binding IdCat}" 
-                       Placeholder="Codigo de Categoria" FontSize="14" PlaceholderColor="DimGray"></Entry>
+                <!--<Entry x:Name="CodigoCat" Text="{Binding IdCat}" 
+                       Placeholder="Codigo de Categoria" FontSize="14" PlaceholderColor="DimGray"></Entry>-->
 
-                <StackLayout Margin="20">
-                    <Label Text="Categorias" FontAttributes="Bold" HorizontalOptions="Center" />
-                    <Picker x:Name="myPicker" Title="Seleccione Categoria" ItemsSource="{Binding Categorias}" SelectedItem="{Binding SelectedColorName, Mode=TwoWay}" />
+                <StackLayout>
+                    <Picker x:Name="myPicker" Title="Categorias" ItemsSource="{Binding Types}" 
+                            ItemDisplayBinding="{Binding DescriptionCat}" SelectedItem="{Binding SelectedCategoria, Mode=TwoWay}" />
                 </StackLayout>
 
                 <Grid>
