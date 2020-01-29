@@ -43,7 +43,7 @@ namespace MundoLibros.ViewModel
         private async void LlenarCategorias()
         {
             var lista = await _Data.ConsultarCategoria();
-            this.Types = new ObservableCollection<Categoria>(lista);
+            Types = new ObservableCollection<Categoria>(lista);
 
             DescriptionCat = "";
         }

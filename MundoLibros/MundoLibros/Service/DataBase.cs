@@ -14,6 +14,7 @@ namespace MundoLibros.Service
     {
         private SQLiteAsyncConnection db;
         private static DataBase _data;
+        private Categoria df;
         //public ObservableCollection<Categoria> cat { get; set; }
 
         public static DataBase getInstance()
@@ -128,19 +129,30 @@ namespace MundoLibros.Service
         {
             return await db.Table<Libro>().FirstOrDefaultAsync(c => c.IdLibro == Id);
         }
+
         //public async Task ConLibros ()
         //{
         //    await db.QueryAsync<Libro>("select * from Libro where IdCat = ?", ca.IdCat);
         //}
+
         public async Task<List<Libro>> ConsultarLibro()
         {
             return await db.Table<Libro>().ToListAsync();
-            //return await db.QueryAsync<Libro>("select * from Libro where IdCat = ?", Li.IdCat);
+            //return await db.Table<Libro>().Where(x => x.IdCat == df.IdCat).ToListAsync();
+        }
+        public async Task<List<Libro>> ConsultarLibro(int id)
+        {
+            return await db.Table<Libro>().Where(x => x.IdCat == id).ToListAsync();
+            //if (id == 0)
+            //{
+            //    return await db.Table<Libro>().ToListAsync();
+            //}
+            //else
+            //{
+            //    return await db.Table<Libro>().Where(x => x.IdCat == id).ToListAsync();
+            //}
         }
         #endregion Libros
-        public void Dispose()
-        {
-            
-        }
+        public void Dispose() { }
     }
 }

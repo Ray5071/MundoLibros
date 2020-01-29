@@ -10,15 +10,10 @@
             <ScrollView>
                 <ListView x:Name="listView" 
                           HasUnevenRows="True" 
-                          ItemsSource="{Binding Libros}"
-                          ItemTapped="ListView_ItemTapped">
+                          ItemsSource="{Binding Libros}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <ViewCell.ContextActions>
-                                    <MenuItem x:Name="btnEditar" Text="Editar Libro" IsDestructive="True"
-                                          Command="{Binding }" Clicked="BtnEditar_Clicked"/>
-                                </ViewCell.ContextActions>
                                 <StackLayout>
                                     <Label Text="{Binding IdLibro}" FontSize="Small" TextColor="Red"/>
                                     <Label Text="{Binding NombreLibro}" FontSize="Small" TextColor="Black"/>

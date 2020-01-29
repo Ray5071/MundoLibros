@@ -11,10 +11,9 @@ namespace MundoLibros.View
         //private SQLiteAsyncConnection db;
         //private Categoria ca;
         public string Categor { get; set; }
-        public ViewLib (string a)
+        public ViewLib ()
 		{
 			InitializeComponent ();
-            NombreLibro.Text = a;
         }
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {

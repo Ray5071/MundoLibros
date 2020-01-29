@@ -1,10 +1,9 @@
 ﻿using MundoLibros.Models;
 using MundoLibros.Service;
+using MundoLibros.View;
 using SQLite;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -14,9 +13,9 @@ namespace MundoLibros.ViewModel
     {
         private DataBase _Data;
         private Libro lib;
+        private SQLiteAsyncConnection db;
         private ObservableCollection<Libro> _libros;
         private ObservableCollection<Categoria> _categoria;
-        private Categoria _SelectedCategoria;
         public ObservableCollection<Categoria> Types { get => _categoria; set => this.SetValue(ref _categoria, value); }
         public ObservableCollection<Libro> Libros { get => _libros; set => this.SetValue(ref _libros, value); }
 
@@ -63,6 +62,7 @@ namespace MundoLibros.ViewModel
             get { return _idCat; }
             set { _idCat = value; }
         }
+        private Categoria _SelectedCategoria;
         public Categoria SelectedCategoria
         {
             get { return _SelectedCategoria; }
@@ -70,6 +70,7 @@ namespace MundoLibros.ViewModel
         }
         #endregion Propiedades
 
+        public int IdPrueba { get; set; }
         public LibrosViewModel()
         {
             _Data = new DataBase();
@@ -79,7 +80,7 @@ namespace MundoLibros.ViewModel
         public async void LlenarCategorias()
         {
             var lista = await _Data.ConsultarCategoria();
-            this.Types = new ObservableCollection<Categoria>(lista);
+            Types = new ObservableCollection<Categoria>(lista);
         }
         
         //public IList<string> Categorias
@@ -92,11 +93,10 @@ namespace MundoLibros.ViewModel
 
         private async void LlenarLibros()
         {
-            var lista = await _Data.ConsultarLibro();
-            this.Libros = new ObservableCollection<Libro>(lista);
-
-            NombreLibro = "";
+            var lista = await _Data.ConsultarLibro(IdPrueba);
+            Libros = new ObservableCollection<Libro>(lista);
         }
+
         public ObservableCollection<Libro> List()
         {
             Libros.Add(new Libro

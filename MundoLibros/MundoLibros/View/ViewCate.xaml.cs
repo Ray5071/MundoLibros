@@ -20,21 +20,19 @@ namespace MundoLibros.View
 		}
         async void Add_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ViewLib(""));
+            await Navigation.PushAsync(new ViewLib());
         }
-        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             Categoria CateActual = (Categoria)e.Item;
             Codigo.Text = Convert.ToString(CateActual.IdCat);
             Descripcion.Text = CateActual.DescriptionCat;
+
+            await Navigation.PushAsync(new ListLib(CateActual.IdCat));
         }
         private void Empty_Clicked(object sender, EventArgs e)
         {
             Descripcion.Text = "";
-        }
-        private async void BtnEditar_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ListLib());
         }
     }
 }
