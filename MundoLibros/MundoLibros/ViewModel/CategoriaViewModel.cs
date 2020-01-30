@@ -19,6 +19,7 @@ namespace MundoLibros.ViewModel
             _Data = new DataBase();
             LlenarCategorias();
         }
+        #region Propiedades
         private int _idCat;
         public int IdCat
         {
@@ -31,6 +32,8 @@ namespace MundoLibros.ViewModel
             get { return _descriptionCat; }
             set { _descriptionCat = value; }
         }
+        #endregion Propiedades
+
         public ObservableCollection<Categoria> List()
         {
             Types.Add(new Categoria

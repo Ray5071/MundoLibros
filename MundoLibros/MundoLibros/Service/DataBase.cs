@@ -1,5 +1,6 @@
 ﻿using MundoLibros.Models;
 using MundoLibros.View;
+using MundoLibros.ViewModel;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace MundoLibros.Service
     {
         private SQLiteAsyncConnection db;
         private static DataBase _data;
-        private Categoria df;
+        private CategoriasViewModel df;
         //public ObservableCollection<Categoria> cat { get; set; }
 
         public static DataBase getInstance()
@@ -143,16 +144,9 @@ namespace MundoLibros.Service
         public async Task<List<Libro>> ConsultarLibro(int id)
         {
             return await db.Table<Libro>().Where(x => x.IdCat == id).ToListAsync();
-            //if (id == 0)
-            //{
-            //    return await db.Table<Libro>().ToListAsync();
-            //}
-            //else
-            //{
-            //    return await db.Table<Libro>().Where(x => x.IdCat == id).ToListAsync();
-            //}
         }
         #endregion Libros
+
         public void Dispose() { }
     }
 }

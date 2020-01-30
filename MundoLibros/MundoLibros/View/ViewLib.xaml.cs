@@ -41,7 +41,7 @@ namespace MundoLibros.View
         }
         private void ListVie_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            Categoria CateActual = (Categoria)e.Item;
+            //CategoriasViewModel CateActual = (CategoriasViewModel)e.Item;
             //CodigoCat.Text = Convert.ToString(CateActual.IdCat);
         }
 

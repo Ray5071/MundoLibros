@@ -13,11 +13,12 @@ namespace MundoLibros.ViewModel
     {
         private DataBase _Data;
         private Libro lib;
-        private SQLiteAsyncConnection db;
+
         private ObservableCollection<Libro> _libros;
+        public ObservableCollection<Libro> Libros { get => _libros; set => this.SetValue(ref _libros, value); }
+
         private ObservableCollection<Categoria> _categoria;
         public ObservableCollection<Categoria> Types { get => _categoria; set => this.SetValue(ref _categoria, value); }
-        public ObservableCollection<Libro> Libros { get => _libros; set => this.SetValue(ref _libros, value); }
 
         #region Propiedades
         private int _idLibro;
@@ -62,8 +63,8 @@ namespace MundoLibros.ViewModel
             get { return _idCat; }
             set { _idCat = value; }
         }
-        private Categoria _SelectedCategoria;
-        public Categoria SelectedCategoria
+        private CategoriasViewModel _SelectedCategoria;
+        public CategoriasViewModel SelectedCategoria
         {
             get { return _SelectedCategoria; }
             set { _SelectedCategoria = value; }
@@ -71,18 +72,20 @@ namespace MundoLibros.ViewModel
         #endregion Propiedades
 
         public int IdPrueba { get; set; }
+
         public LibrosViewModel()
         {
             _Data = new DataBase();
             LlenarLibros();
             LlenarCategorias();
         }
+
         public async void LlenarCategorias()
         {
             var lista = await _Data.ConsultarCategoria();
             Types = new ObservableCollection<Categoria>(lista);
         }
-        
+
         //public IList<string> Categorias
         //{
         //    get
@@ -93,10 +96,9 @@ namespace MundoLibros.ViewModel
 
         private async void LlenarLibros()
         {
-            var lista = await _Data.ConsultarLibro(IdPrueba);
+            var lista = await _Data.ConsultarLibro();
             Libros = new ObservableCollection<Libro>(lista);
         }
-
         public ObservableCollection<Libro> List()
         {
             Libros.Add(new Libro
@@ -108,7 +110,6 @@ namespace MundoLibros.ViewModel
                 PrecioLibro = PrecioLibro,
                 DisponibilidadLibro = DisponibilidadLibro,
                 IdCat = SelectedCategoria.IdCat
-
             });
             return Libros;
         }

@@ -33,7 +33,7 @@ namespace MundoLibros.View
         private async void BtnListLib_Clicked(object sender, EventArgs e)
         {
             App.MasterD.IsPresented = false;
-            await App.MasterD.Detail.Navigation.PushAsync(new ListLib(0));
+            await App.MasterD.Detail.Navigation.PushAsync(new ListLib());
         }
     }
 }

@@ -29,8 +29,8 @@
                 <ScrollView>
                     <ListView x:Name="listView" 
                           HasUnevenRows="True" 
-                          ItemsSource="{Binding Types}" 
-                          ItemTapped="ListView_ItemTapped">
+                          ItemsSource="{Binding Types}"
+                              ItemSelected="ListView_ItemSelected">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>

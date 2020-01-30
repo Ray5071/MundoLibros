@@ -16,13 +16,24 @@ namespace MundoLibros.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ListLib : ContentPage
 	{
-        public int Id { get; set; }
-        public ListLib (int Idd)
+        Categoria _categoria = null;
+        DataBase df = new DataBase();
+        LibrosViewModel fd = new LibrosViewModel();
+        public ListLib ()
 		{
             InitializeComponent();
-            LibrosViewModel df = new LibrosViewModel();
-            df.IdPrueba = Idd;
-		}
+        }
+        public ListLib(Categoria categoria)
+        {
+            this._categoria = categoria;
+        }
+        protected async override void OnAppearing()
+        {
+            List<Libro> misLibros =
+            await df.ConsultarLibro(_categoria.IdCat);
 
+            this.listView.ItemsSource = misLibros;
+            df.
+        }
     }
 }
