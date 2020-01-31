@@ -10,15 +10,17 @@ namespace MundoLibros.ViewModel
     public class CategoriaViewModel : BaseViewModel
     {
         private DataBase _Data;
-        private Categoria Type;
+        private Categoria _category;
+        
         private ObservableCollection<Categoria> _categoria;
-        public ObservableCollection<Categoria> Types { get => _categoria; set => this.SetValue(ref _categoria, value); }
+        public ObservableCollection<Categoria> categoria { get => _categoria; set => this.SetValue(ref _categoria, value); }
 
         public CategoriaViewModel()
         {
             _Data = new DataBase();
             LlenarCategorias();
         }
+
         #region Propiedades
         private int _idCat;
         public int IdCat
@@ -33,29 +35,35 @@ namespace MundoLibros.ViewModel
             set { _descriptionCat = value; }
         }
         #endregion Propiedades
+        
+        //public ICommand ObtenerCategorias => new Command(ItemTapped);
+        //public async void  ItemTapped ()
+        //{
+             
+        //    ListLib page = new ListLib(this.Type);
+        //    //Navigation.PushAsync(page);
+        //}
 
         public ObservableCollection<Categoria> List()
         {
-            Types.Add(new Categoria
+            categoria.Add(new Categoria
             {
                 IdCat = IdCat,
                 DescriptionCat = DescriptionCat
             });
-            return Types;
+            return categoria;
         }
         private async void LlenarCategorias()
         {
             var lista = await _Data.ConsultarCategoria();
-            Types = new ObservableCollection<Categoria>(lista);
-
-            DescriptionCat = "";
+            categoria = new ObservableCollection<Categoria>(lista);
         }
-        public ICommand Agregar => new Command(InsertCategoria);
-        private async void InsertCategoria()
+        public ICommand AddCategory => new Command(AddCategoria);
+        private async void AddCategoria()
         {
-            if (Types.Count == 0)
+            if (categoria.Count == 0)
             {
-                Type = new Categoria()
+                _category = new Categoria()
                 {
                     IdCat = IdCat + 1,
                     DescriptionCat = DescriptionCat
@@ -63,42 +71,48 @@ namespace MundoLibros.ViewModel
             }
             else
             {
-                Type = new Categoria()
+                _category = new Categoria()
                 {
                     DescriptionCat = DescriptionCat
                 };
             }
             using (var dat = DataBase.getInstance())
             {
-                await dat.InsertCat(Type);
+                await dat.InsertCat(_category);
                 LlenarCategorias();
                 IsBusy = true;
             }
         }
-        public ICommand Actualizar => new Command(ActualizarCategoria);
-        private async void ActualizarCategoria()
+        public ICommand EditCategory => new Command(EditCategoria);
+        private async void EditCategoria()
         {
-            Categoria CatToUpdate = Types.FirstOrDefault(l => l.IdCat == IdCat);
-            CatToUpdate.DescriptionCat = DescriptionCat;
+            //Categoria CatToUpdate = categoria.FirstOrDefault(l => l.IdCat == IdCat);
+            //CatToUpdate.DescriptionCat = DescriptionCat;
+            //CatToUpdate.IdCat = IdCat;
 
+            _category = new Categoria()
+            {
+                IdCat = IdCat,
+                DescriptionCat = DescriptionCat
+            };
             using (var dat = DataBase.getInstance())
             {
-                await dat.UpdateCategoria(CatToUpdate);
+                await dat.UpdateCategoria(_category);
                 LlenarCategorias();
                 IsBusy = true;
             }
         }
-        public ICommand Eliminar => new Command(EliminarLibro);
-        private async void EliminarLibro()
+        public ICommand DeleteCategory => new Command(DeleteCategoria);
+        private async void DeleteCategoria()
         {
-            Categoria CatToDelete = Types.FirstOrDefault(l => l.IdCat == IdCat);
+            Categoria CatToDelete = categoria.FirstOrDefault(l => l.IdCat == IdCat);
             using (var dat = DataBase.getInstance())
             {
-                for (int i = 0; i < Types.Count; i++)
+                for (int i = 0; i < categoria.Count; i++)
                 {
-                    if (Types[i].IdCat == CatToDelete.IdCat)
+                    if (categoria[i].IdCat == CatToDelete.IdCat)
                     {
-                        Types[i] = CatToDelete;
+                        categoria[i] = CatToDelete;
                         await dat.DeleteCategoria(CatToDelete);
                     }
                 }
@@ -106,5 +120,6 @@ namespace MundoLibros.ViewModel
                 IsBusy = true;
             }
         }
+
     }
 }

@@ -20,17 +20,22 @@
                        Placeholder="Nombre del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
                 <Entry x:Name="AutorLibro" Text="{Binding AutorLibro}" 
                        Placeholder="Autor del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
+
                 <Entry x:Name="FechaPublicacionLibro" Text="{Binding FechaPublicacionLibro}" 
                        Placeholder="Fecha de Publicacion" FontSize="14" PlaceholderColor="DimGray"></Entry>
+
+                <!--<DatePicker Date="{x:Static system:DateTime.Today}" TextColor="DimGray"></DatePicker>-->
+
                 <Entry x:Name="PrecioLib" Text="{Binding PrecioLibro}" 
-                       Placeholder="Precio del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
-                <Entry x:Name="Dispo" Text="{Binding DisponibilidadLibro}" 
-                       Placeholder="Hay mas Libros?" FontSize="14" PlaceholderColor="DimGray"></Entry>
-                <!--<Entry x:Name="CodigoCat" Text="{Binding IdCat}" 
-                       Placeholder="Codigo de Categoria" FontSize="14" PlaceholderColor="DimGray"></Entry>-->
+                       Placeholder="Precio del Libro" FontSize="14" Keyboard="Numeric" PlaceholderColor="DimGray"></Entry>
+                
+                <StackLayout>
+                    <Picker x:Name="myPickerDis" Title="Disponibilidad" ItemsSource="{Binding Dispon}" 
+                            SelectedItem="{Binding SelectedDispon, Mode=TwoWay}" />
+                </StackLayout>
 
                 <StackLayout>
-                    <Picker x:Name="myPicker" Title="Categorias" ItemsSource="{Binding Types}" 
+                    <Picker x:Name="myPicker" Title="Categorias" ItemsSource="{Binding categoria}" 
                             ItemDisplayBinding="{Binding DescriptionCat}" SelectedItem="{Binding SelectedCategoria, Mode=TwoWay}" />
                 </StackLayout>
 
@@ -40,36 +45,54 @@
                     <Button Text="Editar" Command="{Binding Actualizar}" Clicked="Empty_Clicked" 
                             HorizontalOptions="Center" BackgroundColor="DarkGreen" TextColor="White" />
                     <Button Text="Eliminar" Command="{Binding Eliminar}" Clicked="Empty_Clicked" 
-                            HorizontalOptions="End" BackgroundColor="DarkGreen" TextColor="White" />
+                            HorizontalOptions="End" BackgroundColor="DarkGreen" TextColor="White"/>
                 </Grid>
-
-
-                <ScrollView>
-                    <ListView x:Name="listView" 
+                
+                <ListView x:Name="listView" 
                           HasUnevenRows="True" 
                           ItemsSource="{Binding Libros}" 
                           ItemTapped="ListView_ItemTapped">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <StackLayout>
-                                        <Label Text="{Binding IdLibro}" FontSize="Small" TextColor="Red"/>
-                                        <Label Text="{Binding NombreLibro}" FontSize="Small" TextColor="Black"/>
-                                        <Label Text="{Binding AutorLibro}" FontSize="Small" TextColor="Black"/>
-                                        <Label Text="{Binding FechaPublicacionLibro}" FontSize="Small" TextColor="Black"/>
-                                        <Label Text="{Binding PrecioLibro}" FontSize="Small" TextColor="Black"/>
-                                        <Label Text="{Binding DisponibilidadLibro}" FontSize="Small" TextColor="Black"/>
-                                        <Label Text="{Binding IdCat}" FontSize="Small" TextColor="Black"/>
-                                    </StackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </ScrollView>
-                
-                
-                
-        </StackLayout>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding IdLibro}" 
+                                               FontSize="Medium" TextColor="Red"
+                                               Grid.Column="0"/>
+                                    <Label Text="{Binding NombreLibro}" 
+                                               FontSize="Small" TextColor="Black"
+                                               Grid.Column="1"/>
+                                    <Label Text="{Binding AutorLibro}" 
+                                               FontSize="Small" TextColor="Black"
+                                               Grid.Column="2"/>
+                                    <Label Text="{Binding FechaPublicacionLibro}" 
+                                               FontSize="Small" TextColor="Black"
+                                               Grid.Column="3"/>
+                                    <Label Text="{Binding PrecioLibro}" 
+                                               FontSize="Small" TextColor="Black"
+                                               Grid.Column="4"/>
+                                    <Label Text="{Binding DisponibilidadLibro}" 
+                                               FontSize="Small" TextColor="Black"
+                                               Grid.Column="5"/>
+                                    <Label Text="{Binding IdCat}" 
+                                               FontSize="Small" TextColor="Black"
+                                               Grid.Column="6"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

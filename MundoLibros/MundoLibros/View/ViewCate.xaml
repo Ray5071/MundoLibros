@@ -2,47 +2,53 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             x:Class="MundoLibros.View.ViewCate">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add Libros" Clicked="Add_Clicked"/>
-    </ContentPage.ToolbarItems>
+             x:Class="MundoLibros.View.ViewCate"
+             Title="Categorias">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BindingContext="{Binding CatVM}" Padding="15">
-                <Label Text="Mundo Libros" Font="30" HorizontalOptions="Center" VerticalOptions="Center" 
-                       FontAttributes="Italic" TextColor="Black"/>
-                <Label Text="Categorias" Font="15" HorizontalOptions="Center" VerticalOptions="Center"
+                <Label Text="Gestion de Categorias" Font="30" HorizontalOptions="Center" VerticalOptions="Center" 
+                       FontAttributes="Bold" TextColor="#EE5B5B" />
+                <Label Text="Aqui podras gestionar las categorias de los libros.        Ya sea Agregar, Modificar y Eliminar una Categoria." Font="15" HorizontalOptions="Center" VerticalOptions="Center"
                        FontAttributes="Bold" TextColor="Gray"/>
 
                 <Entry x:Name="Codigo" Text="{Binding IdCat}" IsVisible="False"></Entry>
-                <Entry x:Name="Descripcion" Text="{Binding DescriptionCat}" Placeholder="Descripcion" FontSize="14" PlaceholderColor="DimGray"></Entry>
 
-                <Grid>
-                    <Button Text="Insertar" Command="{Binding Agregar}" Clicked="Empty_Clicked"
-                            HorizontalOptions="Start" BackgroundColor="DarkGreen" TextColor="White" />
-                    <Button Text="Actualizar" Command="{Binding Actualizar}" Clicked="Empty_Clicked"
-                        HorizontalOptions="Center" BackgroundColor="DarkGreen" TextColor="White"/>
-                    <Button Text="Eliminar" Command="{Binding Eliminar}" Clicked="Empty_Clicked"
-                            HorizontalOptions="End" BackgroundColor="DarkGreen" TextColor="White" />
+                <Grid Padding="1, 10, 10, 10">
+                    <Entry x:Name="Descripcion" Text="{Binding DescriptionCat}" 
+                           Placeholder="Descripcion" FontSize="16"
+                           PlaceholderColor="DimGray" HorizontalOptions="Center" WidthRequest="230"></Entry>
+
+                    <Button Text="Add" Command="{Binding AddCategory}" Clicked="Empty_Clicked"
+                            HorizontalOptions="Start" WidthRequest="60" HeightRequest="20"
+                            CornerRadius="40" BackgroundColor="#3FD126" TextColor="White"/>
+                </Grid>
+                
+                <Grid Padding="1, 10, 10, 10">
+                    <Button Text="Edit" Command="{Binding EditCategory}" Clicked="Empty_Clicked"
+                            HorizontalOptions="Start" WidthRequest="60" HeightRequest="40"
+                            CornerRadius="40" BackgroundColor="#3366FF" TextColor="White"/>
+
+                    <Button Text="Delete" Command="{Binding DeleteCategory}" Clicked="Empty_Clicked"
+                            HorizontalOptions="End" WidthRequest="90" HeightRequest="40"
+                            CornerRadius="40" BackgroundColor="#FF333C" TextColor="White"/>
                 </Grid>
 
-                <ScrollView>
-                    <ListView x:Name="listView" 
-                          HasUnevenRows="True" 
-                          ItemsSource="{Binding Types}"
-                              ItemSelected="ListView_ItemSelected">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <StackLayout>
-                                        <Label Text="{Binding IdCat}" FontSize="Small" TextColor="Red"/>
-                                        <Label Text="{Binding DescriptionCat}" FontSize="Small" TextColor="Black"/>
-                                    </StackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </ScrollView>
+                <ListView x:Name="listView" 
+                          ItemsSource="{Binding categoria}"
+                          ItemSelected="ListView_ItemSelected"
+                          HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout >
+                                    <Label Text="{Binding IdCat}" FontSize="Small" TextColor="Red"/>
+                                    <Label Text="{Binding DescriptionCat}" FontSize="Small" TextColor="Black"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
             </StackLayout>
         </ScrollView>

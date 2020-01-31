@@ -13,7 +13,7 @@ namespace MundoLibros.Models
         public int IdCat { get; set; }
         public string AutorLibro { get; set; }
         public string FechaPublicacionLibro { get; set; }
-        public string PrecioLibro { get; set; }
+        public Decimal PrecioLibro { get; set; }
         public string DisponibilidadLibro { get; set; }
     }
 }

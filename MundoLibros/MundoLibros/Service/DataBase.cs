@@ -15,8 +15,6 @@ namespace MundoLibros.Service
     {
         private SQLiteAsyncConnection db;
         private static DataBase _data;
-        private CategoriasViewModel df;
-        //public ObservableCollection<Categoria> cat { get; set; }
 
         public static DataBase getInstance()
         {
@@ -33,6 +31,7 @@ namespace MundoLibros.Service
             db.CreateTableAsync<Categoria>().Wait();
             db.CreateTableAsync<Libro>().Wait();
         }
+
         #region Categoria
         public async Task InsertCat(Categoria Cat)
         {
@@ -40,7 +39,7 @@ namespace MundoLibros.Service
             if (_cat != null) { Cat.IdCat = _cat.IdCat + 1; }
             try
             {
-                if (Cat.DescriptionCat == "")
+                if (Cat.DescriptionCat == "" || Cat.DescriptionCat == null)
                 {
                     await App.Current.MainPage.DisplayAlert("Error!",
                         "Al parecer aun faltan datos...", "Corregir");
@@ -108,12 +107,19 @@ namespace MundoLibros.Service
         }
         public async Task UpdateLibro(Libro libro)
         {
-            var con = await App.Current.MainPage.DisplayAlert("Actualizacion", "Seguro que desea Modificar este registro?", "Modificar", "Cancelar");
-            if (!con) { return; }
-            else
+            try
             {
-                await db.UpdateAsync(libro);
-                await App.Current.MainPage.DisplayAlert("Actualizacion", "Libro Modificado correctamente", "Aceptar");
+                var con = await App.Current.MainPage.DisplayAlert("Edicion!", "Seguro que desea Modificar este registro?", "Modificar", "Cancelar");
+                if (!con) { return; }
+                else
+                {
+                    await db.UpdateAsync(libro);
+                    await App.Current.MainPage.DisplayAlert("Edicion", "Libro Modificado correctamente", "Aceptar");
+                }
+            }
+            catch (Exception)
+            {
+                await App.Current.MainPage.DisplayAlert("ERROR!", "Al parecer ocurrio un error", "Aceptar");
             }
         }
         public async Task DeleteLibro(Libro libro)
@@ -130,16 +136,15 @@ namespace MundoLibros.Service
         {
             return await db.Table<Libro>().FirstOrDefaultAsync(c => c.IdLibro == Id);
         }
-
-        //public async Task ConLibros ()
+        //public async Task ConLibros()
         //{
         //    await db.QueryAsync<Libro>("select * from Libro where IdCat = ?", ca.IdCat);
+        //    return await db.Table<Libro>().ToListAsync();
+        //    return await db.Table<Libro>().Where(x => x.IdCat == id).ToListAsync();
         //}
-
         public async Task<List<Libro>> ConsultarLibro()
         {
             return await db.Table<Libro>().ToListAsync();
-            //return await db.Table<Libro>().Where(x => x.IdCat == df.IdCat).ToListAsync();
         }
         public async Task<List<Libro>> ConsultarLibro(int id)
         {

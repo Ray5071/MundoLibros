@@ -10,7 +10,6 @@ namespace MundoLibros.View
 	{
         //private SQLiteAsyncConnection db;
         //private Categoria ca;
-        public string Categor { get; set; }
         public ViewLib ()
 		{
 			InitializeComponent ();
@@ -23,10 +22,6 @@ namespace MundoLibros.View
             AutorLibro.Text = libroActual.AutorLibro;
             FechaPublicacionLibro.Text = libroActual.FechaPublicacionLibro;
             PrecioLib.Text = Convert.ToString(libroActual.PrecioLibro);
-            Dispo.Text = Convert.ToString(libroActual.DisponibilidadLibro);
-            //CodigoCat.Text = Convert.ToString(libroActual.IdCat);
-
-            //await db.QueryAsync<Libro>("select * from Libro where IdCat = ?", libroActual.IdCat);
         }
         private void Empty_Clicked(object sender, EventArgs e)
         {
@@ -35,14 +30,8 @@ namespace MundoLibros.View
             AutorLibro.Text = "";
             FechaPublicacionLibro.Text = "";
             PrecioLib.Text = "";
-            Dispo.Text = "";
+            myPickerDis.SelectedIndex = -1;
             myPicker.SelectedIndex = -1;
-            //CodigoCat.Text = "";
-        }
-        private void ListVie_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            //CategoriasViewModel CateActual = (CategoriasViewModel)e.Item;
-            //CodigoCat.Text = Convert.ToString(CateActual.IdCat);
         }
 
         private void List_Clicked(object sender, EventArgs e)

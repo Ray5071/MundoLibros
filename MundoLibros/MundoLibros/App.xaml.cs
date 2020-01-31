@@ -20,8 +20,6 @@ namespace MundoLibros
 
             Main.LibroVM = new LibrosViewModel();
             Main.CatVM = new CategoriaViewModel();
-            Main.LisVM = new ListViewModel();
-            Main.Categoria = new CategoriasViewModel();
 
             MainPage = new PagePrincipal();
         }

@@ -1,13 +1,5 @@
 ﻿using MundoLibros.Models;
 using MundoLibros.Service;
-using MundoLibros.ViewModel;
-using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,24 +8,23 @@ namespace MundoLibros.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ListLib : ContentPage
 	{
-        Categoria _categoria = null;
-        DataBase df = new DataBase();
-        LibrosViewModel fd = new LibrosViewModel();
+        Categoria _categoria;
+        DataBase _Data;
         public ListLib ()
 		{
             InitializeComponent();
         }
         public ListLib(Categoria categoria)
         {
-            this._categoria = categoria;
+            InitializeComponent();
+            _categoria = categoria;
+            _Data = new DataBase();
         }
         protected async override void OnAppearing()
         {
-            List<Libro> misLibros =
-            await df.ConsultarLibro(_categoria.IdCat);
-
-            this.listView.ItemsSource = misLibros;
-            df.
+            base.OnAppearing();
+            var misLibros = await _Data.ConsultarLibro(_categoria.IdCat);
+            librosListview.ItemsSource = misLibros;
         }
     }
 }

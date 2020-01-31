@@ -2,6 +2,7 @@
 using MundoLibros.Service;
 using MundoLibros.View;
 using SQLite;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -18,7 +19,7 @@ namespace MundoLibros.ViewModel
         public ObservableCollection<Libro> Libros { get => _libros; set => this.SetValue(ref _libros, value); }
 
         private ObservableCollection<Categoria> _categoria;
-        public ObservableCollection<Categoria> Types { get => _categoria; set => this.SetValue(ref _categoria, value); }
+        public ObservableCollection<Categoria> categoria { get => _categoria; set => this.SetValue(ref _categoria, value); }
 
         #region Propiedades
         private int _idLibro;
@@ -45,17 +46,17 @@ namespace MundoLibros.ViewModel
             get { return _fechaPublicacion; }
             set { _fechaPublicacion = value; }
         }
-        private string _precio;
-        public string PrecioLibro
+        private decimal _precio;
+        public decimal PrecioLibro
         {
             get { return _precio; }
             set { _precio = value; }
         }
-        private string _disponibilidad;
-        public string DisponibilidadLibro
+        private string _selectedDispon;
+        public string SelectedDispon
         {
-            get { return _disponibilidad; }
-            set { _disponibilidad = value; }
+            get { return _selectedDispon; }
+            set { _selectedDispon = value; }
         }
         private int _idCat;
         public int IdCat
@@ -63,15 +64,13 @@ namespace MundoLibros.ViewModel
             get { return _idCat; }
             set { _idCat = value; }
         }
-        private CategoriasViewModel _SelectedCategoria;
-        public CategoriasViewModel SelectedCategoria
+        private Categoria _SelectedCategoria;
+        public Categoria SelectedCategoria
         {
             get { return _SelectedCategoria; }
             set { _SelectedCategoria = value; }
         }
         #endregion Propiedades
-
-        public int IdPrueba { get; set; }
 
         public LibrosViewModel()
         {
@@ -79,21 +78,18 @@ namespace MundoLibros.ViewModel
             LlenarLibros();
             LlenarCategorias();
         }
-
         public async void LlenarCategorias()
         {
             var lista = await _Data.ConsultarCategoria();
-            Types = new ObservableCollection<Categoria>(lista);
+            categoria = new ObservableCollection<Categoria>(lista);
         }
-
-        //public IList<string> Categorias
-        //{
-        //    get
-        //    {
-        //        return new List<string> { "Historia", "Poesia", "Novela" };
-        //    }
-        //}
-
+        public IList<string> Dispon
+        {
+            get
+            {
+                return new List<string> { "Si", "No"};
+            }
+        }
         private async void LlenarLibros()
         {
             var lista = await _Data.ConsultarLibro();
@@ -108,7 +104,7 @@ namespace MundoLibros.ViewModel
                 AutorLibro = AutorLibro,
                 FechaPublicacionLibro = FechaPublicacionLibro,
                 PrecioLibro = PrecioLibro,
-                DisponibilidadLibro = DisponibilidadLibro,
+                DisponibilidadLibro = SelectedDispon,
                 IdCat = SelectedCategoria.IdCat
             });
             return Libros;
@@ -125,7 +121,7 @@ namespace MundoLibros.ViewModel
                     AutorLibro = AutorLibro,
                     FechaPublicacionLibro = FechaPublicacionLibro,
                     PrecioLibro = PrecioLibro,
-                    DisponibilidadLibro = DisponibilidadLibro,
+                    DisponibilidadLibro = SelectedDispon,
                     IdCat = SelectedCategoria.IdCat
                 };
             }
@@ -137,7 +133,7 @@ namespace MundoLibros.ViewModel
                     AutorLibro = AutorLibro,
                     FechaPublicacionLibro = FechaPublicacionLibro,
                     PrecioLibro = PrecioLibro,
-                    DisponibilidadLibro = DisponibilidadLibro,
+                    DisponibilidadLibro = SelectedDispon,
                     IdCat = SelectedCategoria.IdCat
                 };
             }
@@ -151,19 +147,28 @@ namespace MundoLibros.ViewModel
         public ICommand Actualizar => new Command(ActualizarLibro);
         private async void ActualizarLibro()
         {
-            Libro libToUpdate = Libros.FirstOrDefault(l => l.IdLibro == IdLibro);
-            libToUpdate.NombreLibro = NombreLibro;
-            libToUpdate.AutorLibro = AutorLibro;
-            libToUpdate.FechaPublicacionLibro = FechaPublicacionLibro;
-            libToUpdate.PrecioLibro = PrecioLibro;
-            libToUpdate.DisponibilidadLibro = DisponibilidadLibro;
-            libToUpdate.IdCat = SelectedCategoria.IdCat;
-
-            using (var dat = DataBase.getInstance())
+            try
             {
-                await dat.UpdateLibro(libToUpdate);
-                LlenarLibros();
-                IsBusy = true;
+                Libro libToUpdate = Libros.FirstOrDefault(l => l.IdLibro == IdLibro);
+                libToUpdate.NombreLibro = NombreLibro;
+                libToUpdate.AutorLibro = AutorLibro;
+                libToUpdate.FechaPublicacionLibro = FechaPublicacionLibro;
+                libToUpdate.PrecioLibro = PrecioLibro;
+                libToUpdate.DisponibilidadLibro = SelectedDispon;
+                libToUpdate.IdCat = SelectedCategoria.IdCat;
+
+                using (var dat = DataBase.getInstance())
+                {
+                    await dat.UpdateLibro(libToUpdate);
+                    LlenarLibros();
+                    IsBusy = true;
+                }
+            }
+            catch (System.Exception)
+            {
+                await App.Current.MainPage.DisplayAlert("ERROR!", "Algunos campos estan vacios", "Rellenar");
+                await App.Current.MainPage.DisplayAlert("RECORDATORIO!", 
+                    "Recuerde que tiene que ingresar nuevamente la Disponibilidad y la Categoria para editar su libro", "Aceptar");
             }
         }
         public ICommand Eliminar => new Command(EliminarLibro);
