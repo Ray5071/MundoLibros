@@ -4,7 +4,7 @@
              x:Class="MundoLibros.View.details"
              Title="Mundo Libros">
     <StackLayout BackgroundColor="#E6E6E7">
-        <Label Text="Mundo Libros" Font="50" FontFamily="" TextColor="#F9404C"
+        <Label Text="Mundo Libros" Font="50" TextColor="#F9404C"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
     </StackLayout>
