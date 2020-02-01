@@ -1,11 +1,7 @@
 ﻿using MundoLibros.Models;
-using MundoLibros.View;
-using MundoLibros.ViewModel;
 using SQLite;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -42,7 +38,7 @@ namespace MundoLibros.Service
                 if (Cat.DescriptionCat == "" || Cat.DescriptionCat == null)
                 {
                     await App.Current.MainPage.DisplayAlert("Error!",
-                        "Al parecer aun faltan datos...", "Corregir");
+                        "No puede guardar si no hay nada que guardar!", "Corregir");
                 }
                 else
                 {
@@ -57,22 +53,38 @@ namespace MundoLibros.Service
         }
         public async Task UpdateCategoria(Categoria Catego)
         {
-            var con = await App.Current.MainPage.DisplayAlert("Actualizacion!", "Seguro que desea Modificar esta Categoria?", "Modificar", "Cancelar");
-            if (!con) { return; }
+            if (Catego.DescriptionCat != "" && Catego.DescriptionCat != null && Catego.IdCat != 0)
+            {
+                var con = await App.Current.MainPage.DisplayAlert("Actualizacion!", "Seguro que desea Modificar esta Categoria?", "Modificar", "Cancelar");
+                if (!con) { return; }
+                else
+                {
+                    await db.UpdateAsync(Catego);
+                    await App.Current.MainPage.DisplayAlert("Actualizacion!", "Categoria Modificada Correctamente", "Aceptar");
+                }
+            }
             else
             {
-                await db.UpdateAsync(Catego);
-                await App.Current.MainPage.DisplayAlert("Actualizacion!", "Categoria Modificada Correctamente", "Aceptar");
+                await App.Current.MainPage.DisplayAlert("Error!",
+                        "No puede Editar si no hay nada que Editar!", "Corregir");
             }
         }
         public async Task DeleteCategoria(Categoria Catego)
         {
-            var con = await App.Current.MainPage.DisplayAlert("Elimincacion!", "Seguro que desea eliminar esta Categoria?", "Eliminar", "Cancelar");
-            if (!con) { return; }
+            if (Catego.DescriptionCat != "" && Catego.DescriptionCat != null && Catego.IdCat != 0)
+            {
+                var con = await App.Current.MainPage.DisplayAlert("Elimincacion!", "Seguro que desea eliminar esta Categoria?", "Eliminar", "Cancelar");
+                if (!con) { return; }
+                else
+                {
+                    await db.DeleteAsync(Catego);
+                    await App.Current.MainPage.DisplayAlert("Elimincacion!", "Categoria Eliminada Correctamente", "Aceptar");
+                }
+            }
             else
             {
-                await db.DeleteAsync(Catego);
-                await App.Current.MainPage.DisplayAlert("Elimincacion!", "Categoria Eliminada Correctamente", "Aceptar");
+                await App.Current.MainPage.DisplayAlert("Error!",
+                        "No puede Eliminar si no hay nada que Eliminar!", "Corregir");
             }
         }
         public async Task<List<Categoria>> ConsultarCategoria()
@@ -89,7 +101,7 @@ namespace MundoLibros.Service
 
             try
             {
-                if (libro.NombreLibro == "")
+                if (libro == null)
                 {
                     await App.Current.MainPage.DisplayAlert("Error!",
                         "Al parecer aun faltan datos...", "Corregir");

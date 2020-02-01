@@ -29,11 +29,5 @@ namespace MundoLibros.View
             ViewModel.MainViewModel.GetInstance().LibroVM.LlenarCategorias();
             await App.MasterD.Detail.Navigation.PushAsync(new ViewLib());
         }
-
-        private async void BtnListLib_Clicked(object sender, EventArgs e)
-        {
-            App.MasterD.IsPresented = false;
-            await App.MasterD.Detail.Navigation.PushAsync(new ListLib());
-        }
     }
 }

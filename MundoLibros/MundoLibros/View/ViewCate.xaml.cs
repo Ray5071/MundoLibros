@@ -15,12 +15,13 @@ namespace MundoLibros.View
 		}
         private void Empty_Clicked(object sender, EventArgs e)
         {
+            Codigo.Text = "";
             Descripcion.Text = "";
         }
         private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var con = await App.Current.MainPage.DisplayAlert("Pregunta!", 
-                "Quiere editar o ir a los libros de esta categoria?", "Editar", "Ir a lista");
+                "Quiere Editar/Eliminar o ir a los libros de esta categoria?", "Editar/Eliminar", "Ir a lista");
 
             if (!con)
             {

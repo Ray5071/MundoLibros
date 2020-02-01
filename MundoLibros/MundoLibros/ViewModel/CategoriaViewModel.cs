@@ -35,14 +35,6 @@ namespace MundoLibros.ViewModel
             set { _descriptionCat = value; }
         }
         #endregion Propiedades
-        
-        //public ICommand ObtenerCategorias => new Command(ItemTapped);
-        //public async void  ItemTapped ()
-        //{
-             
-        //    ListLib page = new ListLib(this.Type);
-        //    //Navigation.PushAsync(page);
-        //}
 
         public ObservableCollection<Categoria> List()
         {
@@ -86,38 +78,51 @@ namespace MundoLibros.ViewModel
         public ICommand EditCategory => new Command(EditCategoria);
         private async void EditCategoria()
         {
-            //Categoria CatToUpdate = categoria.FirstOrDefault(l => l.IdCat == IdCat);
-            //CatToUpdate.DescriptionCat = DescriptionCat;
-            //CatToUpdate.IdCat = IdCat;
-
-            _category = new Categoria()
+            try
             {
-                IdCat = IdCat,
-                DescriptionCat = DescriptionCat
-            };
-            using (var dat = DataBase.getInstance())
+                _category = new Categoria()
+                {
+                    IdCat = IdCat,
+                    DescriptionCat = DescriptionCat
+                };
+                using (var dat = DataBase.getInstance())
+                {
+                    await dat.UpdateCategoria(_category);
+                    LlenarCategorias();
+                    IsBusy = true;
+                }
+            }
+            catch(System.Exception)
             {
-                await dat.UpdateCategoria(_category);
-                LlenarCategorias();
-                IsBusy = true;
+                await App.Current.MainPage.DisplayAlert("ERROR!", "No se ha especificado que Categoria sera Editada" +
+                    "\nAlgunos campos pueden estar vacios.", "Especificar");
+                await App.Current.MainPage.DisplayAlert("NOTA!", "Pulse la categoria a editar y cuando termine, vuelva a pulsar aqui", "Aceptar");
             }
         }
         public ICommand DeleteCategory => new Command(DeleteCategoria);
         private async void DeleteCategoria()
         {
-            Categoria CatToDelete = categoria.FirstOrDefault(l => l.IdCat == IdCat);
-            using (var dat = DataBase.getInstance())
+            try
             {
-                for (int i = 0; i < categoria.Count; i++)
+                Categoria CatToDelete = categoria.FirstOrDefault(l => l.IdCat == IdCat);
+                using (var dat = DataBase.getInstance())
                 {
-                    if (categoria[i].IdCat == CatToDelete.IdCat)
+                    for (int i = 0; i < categoria.Count; i++)
                     {
-                        categoria[i] = CatToDelete;
-                        await dat.DeleteCategoria(CatToDelete);
+                        if (categoria[i].IdCat == CatToDelete.IdCat)
+                        {
+                            categoria[i] = CatToDelete;
+                            await dat.DeleteCategoria(CatToDelete);
+                        }
                     }
+                    LlenarCategorias();
+                    IsBusy = true;
                 }
-                LlenarCategorias();
-                IsBusy = true;
+            }
+            catch (System.Exception)
+            {
+                await App.Current.MainPage.DisplayAlert("ERROR!", "No se ha especificado que Categoria sera Eliminada", "Especificar");
+                await App.Current.MainPage.DisplayAlert("NOTA!", "Pulse la categoria a eliminar y vuelva a pulsar aqui", "Aceptar");
             }
         }
 

@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             x:Class="MundoLibros.View.ViewLib">
+             x:Class="MundoLibros.View.ViewLib"
+             Title="Libros">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Limpiar" Clicked="Empty_Clicked"/>
     </ContentPage.ToolbarItems>
@@ -11,9 +12,9 @@
             <StackLayout BindingContext="{Binding LibroVM}" Margin="15">
 
                 <Label Text="Nuevos Libros" Font="24" HorizontalOptions="Center"
-                   VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" />
+                   VerticalOptions="Center" FontAttributes="Bold" TextColor="#EE5B5B" />
                 <Label Text="Inserte los Libros en su Categoria Correspondiente" Font="16" HorizontalOptions="Center"
-                   VerticalOptions="Center" FontAttributes="Italic" TextColor="Black" />
+                   VerticalOptions="Center" FontAttributes="Italic" TextColor="Gray" />
 
                 <Entry x:Name="IdLib" Text="{Binding IdLibro}" IsVisible="False"></Entry>
                 <Entry x:Name="NombreLibro" Text="{Binding NombreLibro}" 
@@ -21,10 +22,8 @@
                 <Entry x:Name="AutorLibro" Text="{Binding AutorLibro}" 
                        Placeholder="Autor del Libro" FontSize="14" PlaceholderColor="DimGray"></Entry>
 
-                <Entry x:Name="FechaPublicacionLibro" Text="{Binding FechaPublicacionLibro}" 
+                <Entry x:Name="FechaPublic" Text="{Binding FechaPublicacionLibro}" 
                        Placeholder="Fecha de Publicacion" FontSize="14" PlaceholderColor="DimGray"></Entry>
-
-                <!--<DatePicker Date="{x:Static system:DateTime.Today}" TextColor="DimGray"></DatePicker>-->
 
                 <Entry x:Name="PrecioLib" Text="{Binding PrecioLibro}" 
                        Placeholder="Precio del Libro" FontSize="14" Keyboard="Numeric" PlaceholderColor="DimGray"></Entry>
@@ -39,13 +38,13 @@
                             ItemDisplayBinding="{Binding DescriptionCat}" SelectedItem="{Binding SelectedCategoria, Mode=TwoWay}" />
                 </StackLayout>
 
-                <Grid>
+                <Grid Padding="1, 10, 10, 10">
                     <Button Text="Insertar" Command="{Binding Agregar}" Clicked="Empty_Clicked" 
-                            HorizontalOptions="Start" BackgroundColor="DarkGreen" TextColor="White" />
+                            HorizontalOptions="Start" BackgroundColor="#3FD126" CornerRadius="30" TextColor="White" />
                     <Button Text="Editar" Command="{Binding Actualizar}" Clicked="Empty_Clicked" 
-                            HorizontalOptions="Center" BackgroundColor="DarkGreen" TextColor="White" />
+                            HorizontalOptions="Center" BackgroundColor="#3366FF" CornerRadius="30" TextColor="White" />
                     <Button Text="Eliminar" Command="{Binding Eliminar}" Clicked="Empty_Clicked" 
-                            HorizontalOptions="End" BackgroundColor="DarkGreen" TextColor="White"/>
+                            HorizontalOptions="End" BackgroundColor="#FF333C" CornerRadius="30" TextColor="White"/>
                 </Grid>
                 
                 <ListView x:Name="listView" 

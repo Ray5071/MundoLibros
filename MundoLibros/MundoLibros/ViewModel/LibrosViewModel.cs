@@ -46,8 +46,8 @@ namespace MundoLibros.ViewModel
             get { return _fechaPublicacion; }
             set { _fechaPublicacion = value; }
         }
-        private decimal _precio;
-        public decimal PrecioLibro
+        private string _precio;
+        public string PrecioLibro
         {
             get { return _precio; }
             set { _precio = value; }
@@ -97,13 +97,14 @@ namespace MundoLibros.ViewModel
         }
         public ObservableCollection<Libro> List()
         {
+            var precio = decimal.Parse(PrecioLibro);
             Libros.Add(new Libro
             {
                 IdLibro = IdLibro,
                 NombreLibro = NombreLibro,
                 AutorLibro = AutorLibro,
                 FechaPublicacionLibro = FechaPublicacionLibro,
-                PrecioLibro = PrecioLibro,
+                PrecioLibro = precio,
                 DisponibilidadLibro = SelectedDispon,
                 IdCat = SelectedCategoria.IdCat
             });
@@ -112,36 +113,44 @@ namespace MundoLibros.ViewModel
         public ICommand Agregar => new Command(AgregarLibro);
         private async void AgregarLibro()
         {
-            if (_libros.Count == 0)
+            try
             {
-                lib = new Libro()
+                var precio = decimal.Parse(PrecioLibro);
+                if (_libros.Count == 0)
                 {
-                    IdLibro = IdLibro + 1,
-                    NombreLibro = NombreLibro,
-                    AutorLibro = AutorLibro,
-                    FechaPublicacionLibro = FechaPublicacionLibro,
-                    PrecioLibro = PrecioLibro,
-                    DisponibilidadLibro = SelectedDispon,
-                    IdCat = SelectedCategoria.IdCat
-                };
-            }
-            else
-            {
-                lib = new Libro()
+                    lib = new Libro()
+                    {
+                        IdLibro = IdLibro + 1,
+                        NombreLibro = NombreLibro,
+                        AutorLibro = AutorLibro,
+                        FechaPublicacionLibro = FechaPublicacionLibro,
+                        PrecioLibro = precio,
+                        DisponibilidadLibro = SelectedDispon,
+                        IdCat = SelectedCategoria.IdCat
+                    };
+                }
+                else
                 {
-                    NombreLibro = NombreLibro,
-                    AutorLibro = AutorLibro,
-                    FechaPublicacionLibro = FechaPublicacionLibro,
-                    PrecioLibro = PrecioLibro,
-                    DisponibilidadLibro = SelectedDispon,
-                    IdCat = SelectedCategoria.IdCat
-                };
+                    lib = new Libro()
+                    {
+                        NombreLibro = NombreLibro,
+                        AutorLibro = AutorLibro,
+                        FechaPublicacionLibro = FechaPublicacionLibro,
+                        PrecioLibro = precio,
+                        DisponibilidadLibro = SelectedDispon,
+                        IdCat = SelectedCategoria.IdCat
+                    };
+                }
+                using (var dat = DataBase.getInstance())
+                {
+                    await dat.InserLibro(lib);
+                    LlenarLibros();
+                    IsBusy = true;
+                }
             }
-            using (var dat = DataBase.getInstance())
+            catch(System.Exception)
             {
-                await dat.InserLibro(lib);
-                LlenarLibros();
-                IsBusy = true;
+                await App.Current.MainPage.DisplayAlert("ERROR!", "Algunos campos estan vacios", "Rellenar");
             }
         }
         public ICommand Actualizar => new Command(ActualizarLibro);
@@ -149,11 +158,12 @@ namespace MundoLibros.ViewModel
         {
             try
             {
+                var precio = decimal.Parse(PrecioLibro);
                 Libro libToUpdate = Libros.FirstOrDefault(l => l.IdLibro == IdLibro);
                 libToUpdate.NombreLibro = NombreLibro;
                 libToUpdate.AutorLibro = AutorLibro;
                 libToUpdate.FechaPublicacionLibro = FechaPublicacionLibro;
-                libToUpdate.PrecioLibro = PrecioLibro;
+                libToUpdate.PrecioLibro = precio;
                 libToUpdate.DisponibilidadLibro = SelectedDispon;
                 libToUpdate.IdCat = SelectedCategoria.IdCat;
 
@@ -174,19 +184,26 @@ namespace MundoLibros.ViewModel
         public ICommand Eliminar => new Command(EliminarLibro);
         private async void EliminarLibro()
         {
-            Libro libToDelete = Libros.FirstOrDefault(l => l.IdLibro == IdLibro);
-            using (var dat = DataBase.getInstance())
+            try
             {
-                for (int i = 0; i < Libros.Count; i++)
+                Libro libToDelete = Libros.FirstOrDefault(l => l.IdLibro == IdLibro);
+                using (var dat = DataBase.getInstance())
                 {
-                    if (Libros[i].IdLibro == libToDelete.IdLibro)
+                    for (int i = 0; i < Libros.Count; i++)
                     {
-                        Libros[i] = libToDelete;
-                        await dat.DeleteLibro(libToDelete);
+                        if (Libros[i].IdLibro == libToDelete.IdLibro)
+                        {
+                            Libros[i] = libToDelete;
+                            await dat.DeleteLibro(libToDelete);
+                        }
                     }
+                    LlenarLibros();
+                    IsBusy = true;
                 }
-                LlenarLibros();
-                IsBusy = true;
+            }
+            catch (System.Exception)
+            {
+                await App.Current.MainPage.DisplayAlert("ERROR!", "No se ha especificado que Libro sera Eliminado", "Especificar");
             }
         }
     }

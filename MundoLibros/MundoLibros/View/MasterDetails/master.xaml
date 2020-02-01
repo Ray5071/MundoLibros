@@ -5,14 +5,16 @@
              Title="Master">
 
     <StackLayout Orientation="Vertical">
-        
-        <Label Text="Menu Inicio" Font="35" TextColor="Black" FontAttributes="Bold"/>
 
-        <Button Text="Agregar Categoria" x:Name="btnAddCate" Clicked="BtnAddCate_Clicked"></Button>
-        <Button Text="Agregar Libro" x:Name="btnAddLib" Clicked="BtnAddLib_Clicked"></Button>
-        <Button Text="Lista de Libros" x:Name="btnListLib" Clicked="BtnListLib_Clicked"></Button>
-        
+        <Grid Padding="15">
 
+            <Label Text="Menu" Font="25" TextColor="#4946F6" FontAttributes="Bold" />
+
+            <Button Text="Agregar Categoria" x:Name="btnAddCate" Clicked="BtnAddCate_Clicked"></Button>
+            <Button Text="Agregar Libro" x:Name="btnAddLib" Clicked="BtnAddLib_Clicked"></Button>
+            
+        </Grid>
+        
     </StackLayout>
     
 </ContentPage>

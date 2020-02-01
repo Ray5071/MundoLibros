@@ -8,8 +8,6 @@ namespace MundoLibros.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ViewLib : ContentPage
 	{
-        //private SQLiteAsyncConnection db;
-        //private Categoria ca;
         public ViewLib ()
 		{
 			InitializeComponent ();
@@ -20,7 +18,7 @@ namespace MundoLibros.View
             IdLib.Text = Convert.ToString(libroActual.IdLibro);
             NombreLibro.Text = libroActual.NombreLibro;
             AutorLibro.Text = libroActual.AutorLibro;
-            FechaPublicacionLibro.Text = libroActual.FechaPublicacionLibro;
+            FechaPublic.Text = libroActual.FechaPublicacionLibro;
             PrecioLib.Text = Convert.ToString(libroActual.PrecioLibro);
         }
         private void Empty_Clicked(object sender, EventArgs e)
@@ -28,16 +26,10 @@ namespace MundoLibros.View
             IdLib.Text = "";
             NombreLibro.Text = "";
             AutorLibro.Text = "";
-            FechaPublicacionLibro.Text = "";
+            FechaPublic.Text = "";
             PrecioLib.Text = "";
             myPickerDis.SelectedIndex = -1;
             myPicker.SelectedIndex = -1;
-        }
-
-        private void List_Clicked(object sender, EventArgs e)
-        {
-            //await Navigation.PopAsync();
-            //await Navigation.PushAsync(new ListLib());
         }
     }
 }
