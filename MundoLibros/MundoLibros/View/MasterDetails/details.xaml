@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MundoLibros.View.details">
-    <StackLayout>
+             x:Class="MundoLibros.View.details"
+             Title="Mundo Libros">
+    <StackLayout BackgroundColor="#E6E6E7">
         <Label Text="Mundo Libros" Font="50" TextColor="#F9404C"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
